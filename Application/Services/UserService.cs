@@ -6,6 +6,7 @@ using Domain.Validators;
 using Infrastructure.Repositories;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Application.Services;
 
@@ -34,14 +35,18 @@ public class UserService : IUserService
     public List<UserResponse> List()
     {
         var users = _repository.List();
-        var response = users.Select(user => UserMapper.ToResponse(user)).ToList();
+        var response = users.Select(UserMapper.ToResponse).ToList();
         return response;
     }
 
     public UserResponse? GetById(int id)
     {
         var user = _repository.GetById(id);
-        return user is null ? null : UserMapper.ToResponse(user);
+
+        if (user is null )
+            return null;
+
+        return UserMapper.ToResponse(user);
     }
 
     public UserResponse Create(BaseUserRequest request)

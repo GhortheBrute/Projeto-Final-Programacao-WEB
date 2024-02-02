@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories;
 
@@ -17,7 +18,7 @@ public interface IUserRepository
 
 public class UserRepository : IUserRepository
 {
-    private List<User> _users = []; // Banco de dados
+    private List<User> _users = new List<User>(); // Banco de dados
 
     public List<User> List()
     {
@@ -43,9 +44,14 @@ public class UserRepository : IUserRepository
 
     public User Update(User updatedUser)
     {
-        var user = GetById(updatedUser.Id) ?? throw new Exception("User not found!");
-        user.Login = updatedUser.Login;
+        var user = GetById(updatedUser.Id);
+
+        if (user is null)
+           throw new Exception("User not found!");
+        
+        user.Email = updatedUser.Email;
         user.Name = updatedUser.Name;
+        user.Password = updatedUser.Password;
         return user;
     }
 

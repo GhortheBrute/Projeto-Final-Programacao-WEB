@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
@@ -73,17 +75,23 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
     options.SuppressModelStateInvalidFilter = true;
 });
 
+
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IValidator<BaseUserRequest>, UserValidator>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddSingleton<IUserRepository, UserRepository>();
 
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IValidator<BaseProductRequest>, ProductValidator>();
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddSingleton<IProductRepository, ProductRepository>();
+
+builder.Services.AddScoped<IHashingService, HashingService>();
+builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 
 var app = builder.Build();
 
@@ -105,10 +113,5 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
-var services = builder.Services.BuildServiceProvider();
-var context = services.GetRequiredService<Context>();
-
-await context.Database.EnsureCreatedAsync();
 
 app.Run();

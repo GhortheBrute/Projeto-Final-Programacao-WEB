@@ -18,8 +18,7 @@ public class AuthService : IAuthService
 
     private const string InvalidLoginMessage = "Login is invalid!";
 
-    public AuthService(IUserRepository userRepository, IHashingService hashingService,
-        IJwtService jwtService)
+    public AuthService(IUserRepository userRepository, IHashingService hashingService, IJwtService jwtService)
     {
         _jwtService = jwtService;
         _hashingService = hashingService;

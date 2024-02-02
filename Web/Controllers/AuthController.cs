@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Controllers;
 
+
+[Route("[controller]")]
+[ApiController]
 public class AuthController : ControllerBase
 {
     private readonly IAuthService _authService;

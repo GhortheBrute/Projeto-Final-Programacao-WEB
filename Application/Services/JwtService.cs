@@ -16,7 +16,7 @@ public interface IJwtService
     JwtSecurityToken ValidateToken(string jwt);
 }
 
-public class JwtService
+public class JwtService : IJwtService
 {
     private readonly TokenOptions _options;
     public readonly SigningCredentials _credentials;
