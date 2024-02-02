@@ -10,10 +10,10 @@ public class UserValidator : IValidator<BaseUserRequest>
     {
         var errors = new List<ErrorMessageResponse>();
 
-        if (string.IsNullOrEmpty(user.Login))
+        if (string.IsNullOrEmpty(user.Email))
             errors.Add(new ErrorMessageResponse
             {
-                Field = "Login",
+                Field = "Email",
                 Message = "Field is required!"
             });
 
@@ -27,6 +27,12 @@ public class UserValidator : IValidator<BaseUserRequest>
             errors.Add(new ErrorMessageResponse
             {
                 Field = "Role",
+                Message = "Field is required!"
+            });
+        if (string.IsNullOrEmpty(user.Password))
+            errors.Add(new ErrorMessageResponse
+            {
+                Field = "Password",
                 Message = "Field is required!"
             });
 

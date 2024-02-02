@@ -9,6 +9,7 @@ public interface IUserRepository
 {
     List<User> List();
     User? GetById(int id);
+    User? FindByEmail(string email);
     User Create(User newUser);
     User Update(User updatedUser);
     void Delete(int id);
@@ -26,6 +27,11 @@ public class UserRepository : IUserRepository
     public User? GetById(int id)
     {
         return _users.FirstOrDefault(x => x.Id == id);
+    }
+
+    public User? FindByEmail(string email)
+    {
+        return _users.FirstOrDefault(x => x.Email == email);
     }
 
     public User Create(User newUser)

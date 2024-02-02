@@ -14,10 +14,10 @@ namespace Web.Controllers;
 [ExceptionFilter]
 public class UserController : ControllerBase
 {
-    private readonly ClassOptions _config;
+    private readonly TokenOptions _config;
     private readonly IUserService _service;
 
-    public UserController(IUserService service, IOptions<ClassOptions> config ) 
+    public UserController(IUserService service, IOptions<TokenOptions> config ) 
     {
         _service = service;
         _config = config.Value; 
